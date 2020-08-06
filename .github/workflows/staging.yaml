@@ -1,7 +1,7 @@
 name: Continuos Integration
 on:
-  push:
-    branches: [develop]
+  pull_request:
+    branches: [staging]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,6 +20,7 @@ jobs:
       - name: Build and push Docker image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
+          dockerfile: Dockerfile
           image: ${{ secrets.DOCKER_USERNAME }}/webapp
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
