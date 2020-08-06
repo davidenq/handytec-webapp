@@ -199,3 +199,23 @@ deploy-on-heroku:
 ## Puesta en producción
 
 Se puede copiar y pegar el mismo contenido de `staging.yaml` para generar un pipeline para la puesta en producción del proyecto y basado en la rama Master. Sin embargo, hay otros detalles que resolver conjuntamente con el equipo de infraestructura y no solo el flujo de CI/CD, y realizar otros procesos automaticos como por ejemplo el levantamiento automático de la infraestructura, la creación y asociación dinámica de los DNSs, protocolos de seguridad (HTTPS), configuración balanceadores de carga, configuraciones de red y un sin fin de actividades que están determinados por el servicio que se desee utilizar para desplegar la aplicación. Por ejemplo, si se desea desplegar la aplicación en un servicio AWS Fargate o Google Cloud Run, parte de la infraestructura está solventada puesto que ya lo gestionan los propios servicios. Pero si se desea desplegar un proyecto con una arquitectura de microservicios o arquitectura de serverless, los pipeplines, scripts y demás herramientas pueden cambiar totalmente.
+
+## ¿Desea realizar pruebas del flujo de CI/CD?
+
+1. Realizar el fork del proyecto `git@github.com:davidenq/handytec-webapp.git` en su cuenta en Github
+2. Obtener credenciales de Heroku y DockerHub: Username y Password de DockerHub; API_KEY y EMAIL de Heroku.
+3. Crear los secretos dentro del proyecto (fork). Para ver cómo crear secretos puede ver más información [aquí](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
+   Los secretos que deberá crear son:
+   - DOCKER_PASSWORD
+   - DOCKER_USERNAME
+   - HEROKU_API_KEY
+   - HEROKU_EMAIL
+   - HEROKU_APP_NAME (este es el nombre que usted desea ponerle y el subdominio como tal)
+4. Clonar su repositorio (fork del original) en su local `git clone git@github.com:{GITHUB_USERNAME}/handytec-webapp.git`.
+5. Realizar cambios en el código dentro de `src`.
+6. Modificar la versión actual del proyecto en el archivo `package.json` según el versionamiento semántico.
+7. Enviar los cambios a la rama de develop en github.
+8. Solicitar extracción del código de development a staging branch.
+9. Verificar el flujo de CI/CD en la pestaña `Actions` del proyecto.
+10. Después de que todo haya pasado, podrá acceder a la aplicación a través de la URL 'https://{{HEROKU_APP_NAME}}.heroku.com'.
+11. Podrá verificar la imagen de docker en DockerHub con la versión que fue asignada en `package.json`.
