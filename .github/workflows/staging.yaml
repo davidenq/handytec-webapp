@@ -1,4 +1,4 @@
-name: Continuos Integration
+name: ci_cd
 on:
   pull_request:
     branches: [staging]
@@ -14,21 +14,21 @@ jobs:
 
       - name: Test applicaiton
         run: npm run test
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Login to DockerHub Registry
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-      - name: Build the tagged Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}} .
-
-      - name: Push the tagged Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}}
+  #  build-and-push-on-dockerhub:
+  #    needs: test
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: Checkout code
+  #        uses: actions/checkout@v2
+  #
+  #      - name: Login to DockerHub Registry
+  #        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+  #
+  #      - name: Build the tagged Docker image
+  #        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}} .
+  #
+  #      - name: Push the tagged Docker image
+  #        run: docker push ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}}
   approve:
     needs: build
     runs-on: ubuntu-latest
