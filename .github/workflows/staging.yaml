@@ -3,42 +3,51 @@ on:
   pull_request:
     branches: [staging]
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Test applicaiton
-        run: npm run test
-  approve:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Approve pull request
-        uses: andrewmusgrave/automatic-pull-request-review@0.0.2
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          event: APPROVE
-          body: "Thank you dependabot 🎊"
+  #  test:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: Checkout code
+  #        uses: actions/checkout@v2
+  #
+  #      - name: Install dependencies
+  #        run: npm install
+  #
+  #      - name: Test applicaiton
+  #        run: npm run test
+  #  approve:
+  #    needs: test
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: Checkout code
+  #        uses: actions/checkout@v2
+  #
+  #      - name: Approve pull request
+  #        uses: andrewmusgrave/automatic-pull-request-review@0.0.2
+  #        with:
+  #          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+  #          event: APPROVE
+  #          body: "Thank you dependabot 🎊"
   deploy:
-    needs: approve
+    # needs: approve
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build, Push and Deploy to Heroku
-        id: heroku
-        uses: jctaveras/heroku-deploy@v2.0.0
+      - name: Deploy on Heroku
+        uses: akhileshns/heroku-deploy@v3.4.6
         with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          api_key: ${{ secrets.HEROKU_API_KEY }}
-          app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_path: ${{ github.workspace }}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
+          docker_build_args: |
+            NODE_ENV
+            PORT
+          branch: staging
+          healthcheck: "https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/health"
+          checkstring: "ok"
+          delay: 15
+        env:
+          NODE_ENV: staging
+          PORT: 3000
