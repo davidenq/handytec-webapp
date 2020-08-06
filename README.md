@@ -4,18 +4,18 @@
 
 - Actualmente la aplicación ya está desplegada en Heroku. Puede acceder a la URL `https://handytec-webapp.herokuapp.com/health` o `https://handytec-webapp.herokuapp.com`
 
-- En el repositorio [https://github.com/davidenq/handytec-webapp] se pueden ver todos los cambios realizados, [pull request](https://github.com/davidenq/handytec-webapp/pulls) solicitados, procesos de ci/cd a través de la pestaña [Actions](https://github.com/davidenq/handytec-webapp/actions) y ver que ha pasado y que ha fallado.
+- En el [repositorio actual](https://github.com/davidenq/handytec-webapp) se pueden ver todos los cambios realizados, [pull request](https://github.com/davidenq/handytec-webapp/pulls) solicitados, procesos de ci/cd a través de la pestaña [Actions](https://github.com/davidenq/handytec-webapp/actions) y ver que ha pasado y que ha fallado.
 
 - La imagen docker de acceso públic está publicada en DockerHub. Ver [aquí](https://hub.docker.com/repository/docker/davidenq/handytec-webapp)
 
 ## Resumen
 
-Estrategia de versionamiento: Semver
-Estrategia de branching: Gitflow
-Herramienta para CI/CD: GitHub Actions
-Control de versiones: GitHub
-Versionamiento de imagenes públicas en Dockerhub: Semver (etiquetado automático basado en la versión del archivo package.json)
-Versionamiento de imagenes privadas en Heroku: SHA
+- Estrategia de versionamiento: Semver
+- Estrategia de branching: Gitflow
+- Herramienta para CI/CD: GitHub Actions
+- Control de versiones: GitHub
+- Versionamiento de imagenes públicas en Dockerhub: Semver (etiquetado automático basado en la versión del archivo package.json)
+- Versionamiento de imagenes privadas en Heroku: SHA
 
 ## Información general
 
