@@ -1,4 +1,4 @@
-name: ci_cd
+name: CI CD
 on:
   pull_request:
     branches: [staging]
