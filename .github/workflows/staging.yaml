@@ -56,6 +56,9 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
+          docker_build_args: |
+            NODE_ENV
+            PORT
           branch: staging
           healthcheck: "https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/health"
           checkstring: "ok"
