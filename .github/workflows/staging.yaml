@@ -27,7 +27,22 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           event: APPROVE
           body: "Thank you dependabot 🎊"
-  deploy:
+  build-and-push-on-dockerhub:
+    needs: approve
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build the tagged Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}} .
+
+      - name: Push the tagged Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}}
+  deploy-on-heroku:
     needs: approve
     runs-on: ubuntu-latest
     steps:
