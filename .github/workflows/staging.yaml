@@ -17,12 +17,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Build and push Docker image
-        uses: mr-smithers-excellent/docker-build-push@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build the tagged Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}} .
+
+      - name: Push the tagged Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{github.sha}}
+  approve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Approve pull request
+        if: github.actor == 'dependabot[bot]'
+        uses: andrewmusgrave/automatic-pull-request-review@0.0.2
         with:
-          dockerfile: Dockerfile
-          image: ${{ secrets.DOCKER_USERNAME }}/webapp
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          registry: docker.io
-          tags: latest
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          event: APPROVE
+          body: "Thank you dependabot 🎊"
