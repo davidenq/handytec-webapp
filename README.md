@@ -1,3 +1,22 @@
+## Tabla de contenido
+
+- [Handytec-webapp](#handytec-webapp)
+  - [Notas importantes](#notas-importantes)
+  - [Resumen](#resumen)
+  - [Información general](#información-general)
+  - [Estrategia de Versionamiento](#estrategia-de-versionamiento)
+  - [Estrategia de fusión de ramas](#estrategia-de-fusión-de-ramas)
+  - [Servicios / Librerías / Herramientas utilizadas](#servicios--librerías--herramientas-utilizadas)
+- [Pruebas](#pruebas)
+  - [Requerimientos](#requerimientos)
+  - [¿Cómo probar en local?](#cómo-probar-en-local)
+    - [Descargando la imagen base](#descargando-la-imagen-base)
+    - [Clonando el repositorio](#clonando-el-repositorio)
+  - [Desarrollo](#desarrollo)
+  - [Puesta en staging](#puesta-en-staging)
+  - [Puesta en producción](#puesta-en-producción)
+  - [¿Desea realizar pruebas del flujo de CI/CD?](#desea-realizar-pruebas-del-flujo-de-cicd)
+
 # Handytec-webapp
 
 ## Notas importantes
