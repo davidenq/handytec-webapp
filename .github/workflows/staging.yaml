@@ -3,32 +3,32 @@ on:
   pull_request:
     branches: [staging]
 jobs:
-  #  test:
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #      - name: Checkout code
-  #        uses: actions/checkout@v2
-  #
-  #      - name: Install dependencies
-  #        run: npm install
-  #
-  #      - name: Test applicaiton
-  #        run: npm run test
-  #  approve:
-  #    needs: test
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #      - name: Checkout code
-  #        uses: actions/checkout@v2
-  #
-  #      - name: Approve pull request
-  #        uses: andrewmusgrave/automatic-pull-request-review@0.0.2
-  #        with:
-  #          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-  #          event: APPROVE
-  #          body: "Thank you dependabot 🎊"
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test applicaiton
+        run: npm run test
+  approve:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Approve pull request
+        uses: andrewmusgrave/automatic-pull-request-review@0.0.2
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          event: APPROVE
+          body: "Thank you dependabot 🎊"
   deploy:
-    # needs: approve
+    needs: approve
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
