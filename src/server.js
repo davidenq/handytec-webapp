@@ -17,11 +17,10 @@ internals.Server = function () {
   app.use(stacktrace);
   routes(app);
   if (envs.ENV !== "development") {
-    // /health endpoint is used to check the health of the service. It is required for Heroku service.
+    // "/health" endpoint is used to check the health of the service. It is required for Heroku service.
     app.get("/health", async (req, res) => await res.json({ status: "ok" }));
   }
   app.listen(envs.PORT, () => {
     console.log(`Server is listening on ${envs.PORT}`);
   });
-  return app;
 };
