@@ -17,12 +17,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Build and push Docker image
-        uses: mr-smithers-excellent/docker-build-push@v4
-        with:
-          dockerfile: Dockerfile
-          image: ${{ secrets.DOCKER_USERNAME }}/webapp
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          registry: docker.io
-          tags: latest
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Get the version
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+
+      - name: Build the tagged Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{steps.vars.outputs.tag}}
+
+      - name: Push the tagged Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/handytec-webapp:${{steps.vars.outputs.tag}}
