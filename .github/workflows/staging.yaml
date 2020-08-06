@@ -60,3 +60,4 @@ jobs:
           delay: 5
         env:
           NODE_ENV: staging
+          PORT: 3000
