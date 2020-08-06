@@ -9,3 +9,4 @@ COPY . .
 COPY --from=build /usr/src/app /usr/src/app
 ENV NODE_ENV=${NODE_ENV}
 WORKDIR /usr/src/app
+CMD ["node", "index.js"]
